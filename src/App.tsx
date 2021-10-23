@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { ProgressBar } from './ProgressBar';
 
-function App() {
+const App: React.FC = () => {
+  const [completed, setCompleted] = useState<number>(0);
+
+  useEffect(() => {
+    setTimeout(() => {
+      fetch('https://uragen.000webhostapp.com/reacttest/test')
+      .then(response => response.json())
+      .then(data => setCompleted(data.stopValue))
+    }, 1000);
+  }, []);
+
+  /* fetch('data/progressData.json')
+  .then(response => response.json())
+  .then(data => console.log(data)); */
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ProgressBar topImg='#6a1b9a' barImg='#e0e0de' stopValue={completed} processingTime='2' />
     </div>
-  );
+  )
 }
 
 export default App;
